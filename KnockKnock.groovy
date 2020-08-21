@@ -207,7 +207,7 @@ def mainHandler(evt){
     {
         return
     }
-    
+
     log.warn "${evt.name}: $evt.device is $evt.value"
 
     if(location.mode in restrictedModes)
@@ -252,25 +252,15 @@ accel = $accel
 """
 
     def devName = device
-    def devObject = settings.find{it.key == "$device"}.value
 
-    def list = ["a", "b", "c"]
-    log.warn """
-accel = ${accel}
-${accel.indexOf(accel[0])}
-devObject = $devObject
-"""
-    return
 
     if(rename)
     {
-
-        def index = accel.toString().indexOf(device)
+        def deviceObject = accel.find{it.displayName == device}
+        def index = accel.indexOf(deviceObject)
         logging "*************************************index number is $index, looking for entry ''nickName${index}''"
         devName = settings.find{it.key == "nickName$index"}.value
         logging "devName found = $devName"
-        log.trace "settings = $settings"
-
     }
 
     def message = "$textToSpeak $devName"
